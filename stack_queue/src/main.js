@@ -3,10 +3,29 @@ let stack = [];
 let queueCounter = 1;
 let stackCounter = 1;
 
+function findMissing(arr) {
+  for (let i = 1; i <= arr.length; i++) {
+    if (!arr.includes(i)) {
+      return i;
+    }
+  }
+  return null;
+}
+
 // Add to the queue
 document.getElementById("addQueue").addEventListener("click", () => {
-  queue.push(queueCounter++);
-  console.log("Queue afte adding:", queue);
+  if (queue.length === 0) {
+    queueCounter = 1;
+  }
+
+  let missing = findMissing(queue);
+  if (missing !== null) {
+    queue.push(missing);
+  } else {
+    queue.push(queueCounter++);
+  }
+
+  console.log("Queue after adding:", queue);
 });
 
 // Remove from the queue
@@ -18,10 +37,19 @@ document.getElementById("removeQueue").addEventListener("click", () => {
   }
   console.log("Queue after removal:", queue);
 });
-
 // Add to the stack
 document.getElementById("addStack").addEventListener("click", () => {
-  stack.push(stackCounter++);
+  if (stack.length === 0) {
+    stackCounter = 1;
+  }
+
+  let missing = findMissing(stack);
+  if (missing !== null) {
+    stack.push(missing);
+  } else {
+    stack.push(stackCounter++);
+  }
+
   console.log("Stack after adding:", stack);
 });
 
